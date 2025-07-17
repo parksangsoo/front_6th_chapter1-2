@@ -1,5 +1,5 @@
 const eventRegistry = new WeakMap();
-const DELEGATED_EVENTS = ["click", "mouseover", "focus", "keydown"];
+const DELEGATED_EVENTS = ["click", "mouseover", "focus", "keydown", "change"];
 
 /**
  * 핸들러를 등록하되, 직접 DOM에 addEventListener를 하지 않음
