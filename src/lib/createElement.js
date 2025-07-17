@@ -30,8 +30,6 @@ export function createElement(vNode) {
     Object.entries(props || {}).forEach(([key, value]) => {
       if (key === "checked" || key === "disabled" || key === "selected" || key === "readOnly") {
         el[key] = !!value;
-        el.removeAttribute(key);
-
         return;
       }
       if (key.startsWith("on") && typeof value === "function") {
