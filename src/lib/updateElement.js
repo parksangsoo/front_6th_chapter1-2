@@ -22,15 +22,18 @@ function updateAttributes(target, originNewProps, originOldProps) {
   // 추가/변경된 속성
   Object.keys(originNewProps).forEach((key) => {
     const value = originNewProps[key];
+
+    if (key === "checked" || key === "disabled" || key === "selected" || key === "readOnly") {
+      target[key] = !!value;
+      return; // setAttribute 호출 안 함
+    }
+
     if (key.startsWith("on") && typeof value === "function") {
       addEvent(target, key.slice(2).toLowerCase(), value);
     } else if (key === "className") {
       target.setAttribute("class", value);
     } else if (key.startsWith("data-")) {
       target.setAttribute(key, value);
-    } else if (typeof value === "boolean") {
-      if (value) target.setAttribute(key, "");
-      else target.removeAttribute(key);
     } else {
       target.setAttribute(key, value);
     }

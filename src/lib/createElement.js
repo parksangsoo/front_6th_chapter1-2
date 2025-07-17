@@ -28,6 +28,12 @@ export function createElement(vNode) {
 
     // props 처리
     Object.entries(props || {}).forEach(([key, value]) => {
+      if (key === "checked" || key === "disabled" || key === "selected" || key === "readOnly") {
+        el[key] = !!value;
+        el.removeAttribute(key);
+
+        return;
+      }
       if (key.startsWith("on") && typeof value === "function") {
         // 이벤트 핸들러는 setAttribute 하지 않고, addEvent로만 등록
         addEvent(el, key.slice(2).toLowerCase(), value);
@@ -37,6 +43,12 @@ export function createElement(vNode) {
         el.setAttribute(key, value);
       } else if (typeof value === "boolean") {
         if (value) el.setAttribute(key, "");
+        else {
+          el.removeAttribute(key);
+          if (el.getAttribute(key) === "") {
+            el.removeAttribute(key);
+          }
+        }
       } else {
         el.setAttribute(key, value);
       }
